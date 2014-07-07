@@ -5,8 +5,8 @@ Contributing to Tessel
 
 Are you trying to get to the root of a bug? Here are some common issues and their responsible repositories:
 
-- JavaScript and Node.js incompatibility: [runtime]()
-- WiFi transmissions: [firmware]()
+- JavaScript and Node.js incompatibility: [Runtime]()
+- WiFi transmissions: [Firmware]()
 - Pushing Code to Tessel: [Command Line Interface]()
 
 
