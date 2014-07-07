@@ -12,7 +12,7 @@ Are you trying to get to the root of a bug? Here are some common issues:
 
 ##Contents:
 
-- [Installing Compilation Tools]() walks you through the tools needed to compile all the various subsystems of Tessel.
+- [Installing Compilation Tools]() walks you through the tools needed to compile the various subsystems of Tessel.
 - [Installing Debugging Tools]() introduces different tools for in-depth code execution debugging.
 - [System Overview]() provides an overview of the different subsystems within the Tessel architecture and how they interact with each other.
 - [Details on Core Components]() provides a details discussion of each subsystem.
