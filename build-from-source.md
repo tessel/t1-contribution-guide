@@ -1,0 +1,33 @@
+#Building From Source
+
+Firmware and runtime have their own compilation tools but many of the same dependencies. We have instructions for OSX and Linux. Windows users should use Linux in a Virtual Machine. The CLI and colony-compiler are simply npm repositories
+
+##Runtime
+To install the runtime compilation tools, check out [these instructions on the runtime README](https://github.com/tessel/runtime#tessel-runtime). The runtime can even be tested on your computer without a Tessel by running javascript files with `colony` instead of `tessel run` or `tessel push` (eg. `colony index.js`). 
+
+##Firmware
+To install the firmware compilation tools, check out [these instructions on the firmware README](https://github.com/tessel/firmware#compiling). 
+
+If you'd like to compile with a local version of runtime, you should create a symlink in your deps folder to your cloned version of runtime.
+
+For example (within cloned firmware, on OSX)
+```
+firmware >> cd /deps
+firmware/deps >> rm -rf runtime
+firmware/deps >> ln -s <PATH TO RUNTIME> runtime
+firmware/deps >> ls
+
+runtime usb
+firmware/deps >> cd ../
+firmware >> make arm-deploy
+```
+
+Replace <PATH TO RUNTIME> with the actual path to your cloned Runtime repo. 
+
+
+##Command Line Interface
+To install your own version of CLI, [clone our CLI repo], then run `npm link --local` within the CLI repo. Note that if you `npm install tessel -g`, you will override this local link.
+
+
+##Colony
+To install our JS-> Lua compiler, simply clone [the colony-compiler repo](https://github.com/tessel/colony-compiler).
