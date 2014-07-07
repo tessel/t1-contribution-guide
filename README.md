@@ -1,9 +1,9 @@
 Contributing to Tessel
 ==================
 
-##At a Glance:
+##At a glance:
 
-Are you trying to get to the root of a bug? Here are some common issues:
+Are you trying to get to the root of a bug? Here are some common issues and their responsible repositories:
 
 - JavaScript and Node.js incompatibility: [runtime]()
 - WiFi transmissions: [firmware]()
