@@ -72,7 +72,15 @@ Data transmission and reception is achieved with the [NXP provided UART driver](
 
 ## USB Communication
 
+Tessel communicates over USB micro cables to a host computer. Technical Machine was granted a USB PID/VID from [OpenMoco](http://wiki.openmoko.org/wiki/USB_Product_IDs) because we create open source hardware. The code that defines that the USB behavior can be found in [`/src/usb/`]https://github.com/tessel/firmware/tree/master/src/usb). 
+
+[`device.c`](https://github.com/tessel/firmware/blob/master/src/usb/device.c) defines the implementation for USB vendor requests.
+['log_interface.c'](https://github.com/tessel/firmware/blob/master/src/usb/log_interface.c) defines the implementation for human readable messages such as those created with `console.log`.
+[`msg_interface.c`](https://github.com/tessel/firmware/blob/master/src/usb/msg_interface.c) defines the implementation for machine-readable commands like those to manage WiFi.
+[`usb.c`](https://github.com/tessel/firmware/blob/master/src/usb/usb.c) defines the implementation for arbitrary message passing.
+
 ## CC3k WiFi Chip
+
 
 ## Event Queue
 
