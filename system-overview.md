@@ -45,7 +45,7 @@ The runtime can both be run from a computer and on Tessel. For more details and 
 ##Wifi
 We use TI's [CC3000](http://processors.wiki.ti.com/index.php/CC3000) as Tessel's wifi chip. 
 
-The CC300 has TI's custom firmware loaded on to it. The version can be checked with a `tessel version --board`.
+The CC3000 has TI's custom firmware loaded on to it. The version can be checked with a `tessel version --board`.
 
 Tessel talks to the CC3000 through a dedicated [SPI bus](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus). One SPI bus is used for all external ports (Ports A-D & GPIO), and the other SPI bus is use exclusively for Wifi. 
 
