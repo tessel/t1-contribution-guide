@@ -7,17 +7,18 @@ When Tessel boots, firmware gets loaded into flash by way of the [bootloader](#b
 The firmware layer is responsible for:
 - [Receiving commands from the Tessel API](#tessel-api)
 - [Transcieving data from peripherals over the SPI, UART, and I2C communication Buses](#communication-buses). 
-- [Changing Pin States](#changing-pin-states)
+- [Reading and Writing Pin States](#reading-and-writing-pin-states)
 - [Communinicating with the host computer over USB](#usb-communication)
 - [Managing and updating the WiFi chip](#cc3k-wifi-chip)
-- [Queueing and firing events from the event queue](#event-queue)
 - [Managing hardware interrupts](#hardware-interrupts)
 - [Communicating with the Lua VM](#integrating-with-runtime)
 - [Putting the processor to sleep when it's not being used](#power-reduction-modes)
 
 ## Bootloader
 
-When Tessel is first programmed at the factory, two things happen. First...
+When Tessel is first programmed at the factory, the OTP binary sets the OTP bits to (0x0Y) where Y is the hardware version of Tessel (Y was 4 for the final production run). The OTP binary then loads the bootloader into flash and sets the OTP bits such that the microcontroller knows to always bootup from flash.
+
+The OTP script can be found in [`/otp/main.c`](https://github.com/tessel/firmware/tree/master/otp) and the bootloader can be found in [`/boot/main.c`](https://github.com/tessel/firmware/blob/master/boot/main.c).
 
 ## Tessel API
 
@@ -46,6 +47,26 @@ For returning values from a Lua function, you must use Lua's C API to push and/o
 
 For a guide on how to make changes in firmware read the [C to JS guide](https://github.com/tessel/docs/blob/master/tutorials/c-to-js.md).
 
+## Reading and Writing Pin States
+
+Tessel has three GPIO pins on each module port and six GPIO pins on the GPIO bank. Additionally, The GPIO bank has six pins for reading analog values.
+
+### Writing to the GPIO pins
+
+The interface for setting a pin as output and pulling 'high', 'low', setting a pull up or pulldown, or leaving in a 'tri-state' is defined in [`src/hw/hw_digital.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_digital.c). 
+
+Digital pins G4-G6 on the GPIO bank can also be used as [PWM](http://en.wikipedia.org/wiki/Pulse-width_modulation) pins which is handy for moving servos, lighting LEDs, etc. The implementation of PWM can be found in [`src/hw/hw_pwm.c](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c) and takes advantage of the built-in hardware [State Configurable Timer (SCT)](http://www.lpcware.com/content/project/SCTimer-PWM).
+
+The driver generates a PWM signal with two events: [one for the end of a PWM period](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c#L31), and one for [the end of a duty cycle](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c#L61). The end of period event sets the output high and the end of duty cycle event sets the output low. 
+
+**Hardware Limitations**: All of the PWM pins share the same frequency but can have different duty cycles.
+
+### Reading from the GPIO pins
+
+The code to set a pin as input and read a digital state is found in [`src/hw/hw_digital.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_digital.c).
+
+The Analog Pins (A1-A5 on the GPIO bank) can read analog values and convert them to a digital value. The implementation can be found in [`src/hw/hw_analog.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_analog.c).
+
 ## Communication Buses 
 
 There are three hardware communication buses exposed on Tessel: [SPI](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus), [I2C](http://en.wikipedia.org/wiki/I%C2%B2C), and [UART](http://en.wikipedia.org/wiki/Uart). Each have their own pros and cons as far as speed, number of wires, complexity, etc. which is why different integrated circuits use different protocols. These bus protocols can be seen as the analogue of HTTP in the embedded domain (with a different physical layer).
@@ -64,11 +85,15 @@ The asynchronous SPI driver is more complex in that it uses [DMA (Direct Memory 
 
 [I2C](http://en.wikipedia.org/wiki/I%C2%B2C) transmission is relatively simple and can be found at [`src/hw/hw_i2c.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_i2c.c). We use the NXP provided I2C driver by creating a struct of transmission data, and [sending it off](https://github.com/tessel/firmware/blob/master/src/hw/hw_i2c.c#L84-L95).
 
+**Hardware Limitations**: The I2C protocol demands that each device has a unique address which a master I2C device uses to send data to it. You cannot have more than one device with a specific address on an I2C bus. Tessel has two I2C buses routed to each side of the board (Ports A, B and C, D) which means you cannot plug in more than two of any module with a specific I2C address.
+
 ### UART
 
 The [UART](http://en.wikipedia.org/wiki/Uart) driver can be found at [`/src/hw/hw_uart.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_uart.c) and is designed around a [ring buffer](http://en.wikipedia.org/wiki/Circular_buffer) architecture. UART is not a transaction-based protocol like SPI or I2C so transmissions can come or go at any time. A ring buffer lets us set a maximim amount of memory we're willing to allocate for UART data with the downside of possibly overwriting unread data if it comes in too quickly.
 
 Data transmission and reception is achieved with the [NXP provided UART driver](https://github.com/tessel/firmware/blob/master/lpc18xx/Drivers/include/lpc18xx_uart.h). When data is received, it is placed at the next available position in the ring buffer and the number of bytes available to be read is incremented accordingly. We the trigger an event in the [event queue](#event-queue) so that the ring buffer will be read at the next available chance.
+
+**Hardware Limitations**: There were not enough UART buses to route to every port so port C and the GPIO bank do not yet have a UART interface. We are planning on adding software UART support on those ports in the near future (or you can contribute!).
 
 ## USB Communication
 
@@ -107,13 +132,21 @@ Trying to connect to Wifi through a CLI `tessel wifi -n -p` does the following:
 3. The command is processed at `tessel_cmd_process` in [src/main.c](https://github.com/tessel/firmware/blob/master/src/main.c)
 4. This then goes through the same steps as first bootup to connect.
 5. CLI reads the emitted events from `_cc3000_cb_wifi_connect` or `_cc3000_cb_wifi_disconnect` and exposes that back to the user.
-## Event Queue
+
 
 ## Hardware Interrupts
 
+GPIO pins can wait for their state to change in order to fire an interrupt. The pin change can be fired on a signal `rise`, `fall`, `high` (like `rise` but can fire immediately), or `low` (like `fall` but can fire immediately). The LPC1830 microcontroller allows up to 8 simultaneaous active interrupts, two of which are used by internal circuitry (like the WiFI chip).
+
+The code handling interrupts can be found in [`/src/hw/hw_interrupt.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_interrupt.c). When an interrupt fires, [an event is queued](https://github.com/tessel/firmware/blob/master/src/hw/hw_interrupt.c#L258) in the event queue. At the next available moment, the interrupt is fired into Lua.  
 
 
 ## Integration with Runtime
 
+Integration with the runtime allows the firmware to access several hardware agnostic resources such as the event queue and the Lua VM. The integration also allows the runtime to utilize the dedicated hardware for specific critical tasks such as timing, net access, and entropy generation. The separation of the runtime from the firmware will allow us to build out a portable version of the runtime that is platform agnostic (amongst ARM M3+ chips).
+
+Integration points in the firmware can be found in [`/src/tm`](https://github.com/tessel/firmware/tree/master/src/tm).
+
 ## Power Reduction Modes
 
+Tessel currently does very little in the way of reducing power when the event queue is empty. This is an area for much improvement. 
