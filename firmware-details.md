@@ -40,55 +40,55 @@ called, the following happens:
 
 1. The Tessel object's properties are read from [builtin.js](https://github.com/tessel/firmware/blob/master/builtin/tessel.js):
 
-```.js
-this.ports =  {
-    A: new Port('A', [new Pin(hw.PIN_A_G1), new Pin(hw.PIN_A_G2), new Pin(hw.PIN_A_G3)], [], [],
-      hw.I2C_1,
-      hw.UART_3
-    ),
-    ...
-```
+  ```.js
+  this.ports =  {
+      A: new Port('A', [new Pin(hw.PIN_A_G1), new Pin(hw.PIN_A_G2), new Pin(hw.PIN_A_G3)], [], [],
+        hw.I2C_1,
+        hw.UART_3
+      ),
+      ...
+  ```
 2. At the top of `builtin.js` is `var hw = process.binding('hw');`. This process binding is what allows us to [call into the exposed Lua hardware functions](https://github.com/tessel/firmware/blob/master/src/hw/l_hw.c#L709):
-```.js
-LUALIB_API int luaopen_hw(lua_State* L)
-{
-  luaL_reg regs[] = {
-    ...
-    // gpio / leds
-    { "digital_output", l_hw_digital_output },
-    { "digital_input", l_hw_digital_input },
-    { "digital_write", l_hw_digital_write },
-    { "digital_read", l_hw_digital_read },
-    { "digital_get_mode", l_hw_digital_get_mode},
-    ...
-  }
-```
+  ```.js
+  LUALIB_API int luaopen_hw(lua_State* L)
+  {
+    luaL_reg regs[] = {
+      ...
+      // gpio / leds
+      { "digital_output", l_hw_digital_output },
+      { "digital_input", l_hw_digital_input },
+      { "digital_write", l_hw_digital_write },
+      { "digital_read", l_hw_digital_read },
+      { "digital_get_mode", l_hw_digital_get_mode},
+      ...
+    }
+  ```
 
 3. In the case of this example (digital.write), we are calling the [`l_hw_digital_write` function](https://github.com/tessel/firmware/blob/master/src/hw/l_hw.c#L384):
 
-```.c
-static int l_hw_digital_write(lua_State* L)
-{
-  uint32_t pin = (uint32_t)lua_tonumber(L, ARG1);
-  uint32_t level = (uint32_t)lua_tonumber(L, ARG1 + 1);
+  ```.c
+  static int l_hw_digital_write(lua_State* L)
+  {
+    uint32_t pin = (uint32_t)lua_tonumber(L, ARG1);
+    uint32_t level = (uint32_t)lua_tonumber(L, ARG1 + 1);
 
-  hw_digital_write(pin, level);
+    hw_digital_write(pin, level);
 
-  return 0;
-}
-
-```
-Which in turn calls the [`hw_digital_write`](https://github.com/tessel/firmware/blob/master/src/hw/hw_digital.c#L85) function:
-```.c
-void hw_digital_write (size_t ulPin, uint8_t ulVal)
-{
-  if (ulVal != HW_LOW) {
-    GPIO_SetValue(g_APinDescription[ulPin].portNum, 1 << g_APinDescription[ulPin].bitNum);
-  } else {
-    GPIO_ClearValue(g_APinDescription[ulPin].portNum, 1 << (g_APinDescription[ulPin].bitNum));
+    return 0;
   }
-}
-```
+
+  ```
+Which in turn calls the [`hw_digital_write`](https://github.com/tessel/firmware/blob/master/src/hw/hw_digital.c#L85) function:
+  ```.c
+  void hw_digital_write (size_t ulPin, uint8_t ulVal)
+  {
+    if (ulVal != HW_LOW) {
+      GPIO_SetValue(g_APinDescription[ulPin].portNum, 1 << g_APinDescription[ulPin].bitNum);
+    } else {
+      GPIO_ClearValue(g_APinDescription[ulPin].portNum, 1 << (g_APinDescription[ulPin].bitNum));
+    }
+  }
+  ```
 4. The `hw-digital_write` function then writes the appropriate value to the hardware registers to change the physical state of the pin.
 
 For returning values from a Lua function, you must use Lua's C API to push and/or pop values onto the stack and return the number of elements that should be returned to JS (in an array). As an example, check out how [SPI returns an error code](https://github.com/tessel/firmware/blob/master/src/hw/l_hw.c#L146) (it doesn't need to return the receive buffer because that's allocated prior to the transfer and received bytes are simply placed in the buffer).
