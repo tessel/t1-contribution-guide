@@ -18,19 +18,6 @@ When code is pushed to the Tessel (via a `tessel run` or a `tessel push`), the f
 5. Tessel handles the incoming event transfer and on the next iteration of the event loop rewrites the Flash/RAM with the contents of the transfer.
 6. On the next iteration of the event loop, the new Flash/RAM code is run.
 
-##Binding JS functions to hardware
-[JS functions that are dependent on hardware](https://github.com/tessel/docs/blob/master/hardware-api.md) is exposed through the [firmware](https://github.com/tessel/firmware).
-
-When a function like `tessel.port['A'].digital[0].write(0)` is 
-called, the following happens:
-
-1. The Tessel object's properties are read from [builtin.js](https://github.com/tessel/firmware/blob/master/builtin/tessel.js).
-2. At the top of `builtin.js` is `var tm = process.binding('tm');`. This process binding is what allows us to [call into the Lua functions](https://github.com/tessel/firmware/blob/master/src/hw/l_hw.c#L709).
-3. In the case of this example (digital.write), we are calling the `l_hw_digital_write` function which in turn calls the `hw_digital_write` function.
-
-For more details and a guide on how to make changes in firmware read the [firmware contribution walkthrough]().
-
-
 ##Node/JS compatability
 The Node & core JS function compatability layer is handled by the [runtime](https://github.com/tessel/runtime).
 
