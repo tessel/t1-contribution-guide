@@ -4,7 +4,7 @@ When Tessel boots, firmware gets loaded into flash by way of the [bootloader](#b
 
 The firmware layer is responsible for:
 
-- [Transcieving data from peripherals over the SPI, UART, and I2C communication Buses](#communication-busses). 
+- [Transcieving data from peripherals over the SPI, UART, and I2C communication Buses](#communication-buses). 
 - [Communinicating with the host computer over USB](#usb-communication)
 - [Managing and updating the WiFi chip](#cc3k-wifi-chip)
 - [Queueing and firing events from the event queue](#event-queue)
