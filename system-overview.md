@@ -21,10 +21,6 @@ When code is pushed to the Tessel (via a `tessel run` or a `tessel push`), the f
 ##Node/JS compatability
 The Node & core JS function compatability layer is handled by the [runtime](https://github.com/tessel/runtime).
 
-The Node modules live underneath [src/colony/modules](https://github.com/tessel/runtime/tree/master/src/colony/modules).
-
-Additionally some modules (require, buffer, EventEmitter) are written in Lua. Those modules are located at [src/colony/lua/colony-node.lua](https://github.com/tessel/runtime/blob/master/src/colony/lua/colony-node.lua). 
-
-Core JS functions (String, Number, Array, Boolean, Date, JSON, etc) are located at [src/colony/lua/colony-js.lua](https://github.com/tessel/runtime/blob/master/src/colony/lua/colony-js.lua).
 
 The runtime can both be run from a computer and on Tessel. For more details and a guide on how to make changes in runtime read the [runtime contribution walkthrough]().
+
