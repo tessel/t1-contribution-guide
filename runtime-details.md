@@ -2,7 +2,7 @@
 
 You can find the runtime repo [here](github.com/runtime) and the source building instructions [here](./build-from-source.md#runtime). Note that you don't even need a Tessel to contribute to runtime – especially JS and Node.js compatibility. 
 
-The runtime is a lua virtual machine and related C library that is responsible for:
+The runtime includes a Lua virtual machine and related C library that is responsible for:
 
 - [Running Lua code, usually after being transpiled from JavaScript](#lua-vm)
 - [Mainting compatibility with JavaScript](#javascript-compatibility)

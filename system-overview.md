@@ -17,10 +17,3 @@ When code is pushed to the Tessel (via a `tessel run` or a `tessel push`), the f
 3. This entire directory is sent over USB to Tessel through a [USB control transfer](http://www.beyondlogic.org/usbnutshell/usb4.shtml#Control).
 5. Tessel handles the incoming event transfer and on the next iteration of the event loop rewrites the Flash/RAM with the contents of the transfer.
 6. On the next iteration of the event loop, the new Flash/RAM code is run.
-
-##Node/JS compatability
-The Node & core JS function compatability layer is handled by the [runtime](https://github.com/tessel/runtime).
-
-
-The runtime can both be run from a computer and on Tessel. For more details and a guide on how to make changes in runtime read the [runtime contribution walkthrough]().
-
