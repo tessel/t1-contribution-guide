@@ -6,10 +6,10 @@ When Tessel boots, firmware gets loaded into flash by way of the [bootloader](#b
 
 The firmware layer is responsible for:
 - [Receiving commands from the Tessel API](#tessel-api)
-- [Transcieving data from peripherals over the SPI, UART, and I2C communication Buses](#communication-buses). 
+- [Transceiving data from peripherals over the SPI, UART, and I2C communication buses](#communication-buses).
 - [Reading and Writing Pin States](#reading-and-writing-pin-states)
-- [Communinicating with the host computer over USB](#usb-communication)
-- [Managing and updating the WiFi chip](#cc3k-wifi-chip)
+- [Communicating with the host computer over USB](#usb-communication)
+- [Managing and updating the Wi-Fi chip](#cc3k-wifi-chip)
 - [Managing hardware interrupts](#hardware-interrupts)
 - [Communicating with the Lua VM](#integrating-with-runtime)
 - [Putting the processor to sleep when it's not being used](#power-reduction-modes)
@@ -35,7 +35,7 @@ The `hw` process exposes Lua bindings to the hardware interfaces and the `tm` pr
 
 We then have a functionality that binds those Lua functions to the underlying C function which can access the hardware.
 
-For example, when a function like `tessel.port['A'].digital[0].write(0)` is 
+For example, when a function like `tessel.port['A'].digital[0].write(0)` is
 called, the following happens:
 
 1. The Tessel object's properties are read from [builtin.js](https://github.com/tessel/firmware/blob/master/builtin/tessel.js):
@@ -101,11 +101,11 @@ Tessel has three GPIO pins on each module port and six GPIO pins on the GPIO ban
 
 ### Writing to the GPIO pins
 
-The interface for setting a pin as output and pulling 'high', 'low', setting a pull up or pulldown, or leaving in a 'tri-state' is defined in [`src/hw/hw_digital.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_digital.c). 
+The interface for setting a pin as output and pulling 'high', 'low', setting a pull up or pulldown, or leaving in a 'tri-state' is defined in [`src/hw/hw_digital.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_digital.c).
 
 Digital pins G4-G6 on the GPIO bank can also be used as [PWM](http://en.wikipedia.org/wiki/Pulse-width_modulation) pins which is handy for moving servos, lighting LEDs, etc. The implementation of PWM can be found in [`src/hw/hw_pwm.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c) and takes advantage of the built-in hardware [State Configurable Timer (SCT)](http://www.lpcware.com/content/project/SCTimer-PWM).
 
-The driver generates a PWM signal with two events: [one for the end of a PWM period](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c#L31), and one for [the end of a duty cycle](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c#L61). The end of period event sets the output high and the end of duty cycle event sets the output low. 
+The driver generates a PWM signal with two events: [one for the end of a PWM period](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c#L31), and one for [the end of a duty cycle](https://github.com/tessel/firmware/blob/master/src/hw/hw_pwm.c#L61). The end of period event sets the output high and the end of duty cycle event sets the output low.
 
 **Hardware Limitations**: All of the PWM pins share the same frequency but can have different duty cycles.
 
@@ -115,15 +115,15 @@ The code to set a pin as input and read a digital state is found in [`src/hw/hw_
 
 The Analog Pins (A1-A5 on the GPIO bank) can read analog values and convert them to a digital value. The implementation can be found in [`src/hw/hw_analog.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_analog.c).
 
-## Communication Buses 
+## Communication Buses
 
 There are three hardware communication buses exposed on Tessel: [SPI](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus), [I2C](http://en.wikipedia.org/wiki/I%C2%B2C), and [UART](http://en.wikipedia.org/wiki/Uart). Each have their own pros and cons as far as speed, number of wires, complexity, etc. which is why different integrated circuits use different protocols. These bus protocols can be seen as the analogue of HTTP in the embedded domain (with a different physical layer).
 
-The drivers for these buses can be found in the [`/src/hw/`](https://github.com/tessel/firmware/tree/master/src/hw) folder in the firmware repo. 
+The drivers for these buses can be found in the [`/src/hw/`](https://github.com/tessel/firmware/tree/master/src/hw) folder in the firmware repo.
 
 ### SPI
 
-There are two SPI drivers used for SPI: [`hw_spi.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_spi.c) and [`hw_spi_async.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_spi_async.c). We use the synchronous SPI driver for communication with the CC3k WiFi chip and the asynchronous SPI driver for our exposed hardware API. 
+There are two SPI drivers used for SPI: [`hw_spi.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_spi.c) and [`hw_spi_async.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_spi_async.c). We use the synchronous SPI driver for communication with the CC3k Wi-Fi chip and the asynchronous SPI driver for our exposed hardware API.
 
 The synchronous SPI driver uses the interface defined by the [NXP provided SPI drivers](https://github.com/tessel/firmware/tree/master/lpc18xx) to start a polling transfer of bytes.
 
@@ -145,20 +145,20 @@ Data transmission and reception is achieved with the [NXP provided UART driver](
 
 ## USB Communication
 
-Tessel communicates over USB micro cables to a host computer. Technical Machine was granted a USB PID/VID from [OpenMoco](http://wiki.openmoko.org/wiki/USB_Product_IDs) because we create open source hardware. The code that defines that the USB behavior can be found in [`/src/usb/`](https://github.com/tessel/firmware/tree/master/src/usb). 
+Tessel communicates over USB micro cables to a host computer. Technical Machine was granted a USB PID/VID from [OpenMoco](http://wiki.openmoko.org/wiki/USB_Product_IDs) because we create open source hardware. The code that defines that the USB behavior can be found in [`/src/usb/`](https://github.com/tessel/firmware/tree/master/src/usb).
 
 - [`device.c`](https://github.com/tessel/firmware/blob/master/src/usb/device.c) defines the implementation for USB vendor requests.
-- ['log_interface.c'](https://github.com/tessel/firmware/blob/master/src/usb/log_interface.c) defines the implementation for human readable messages such as those created with `console.log`.
-- [`msg_interface.c`](https://github.com/tessel/firmware/blob/master/src/usb/msg_interface.c) defines the implementation for machine-readable commands like those to manage WiFi.
+- [`log_interface.c`](https://github.com/tessel/firmware/blob/master/src/usb/log_interface.c) defines the implementation for human readable messages such as those created with `console.log`.
+- [`msg_interface.c`](https://github.com/tessel/firmware/blob/master/src/usb/msg_interface.c) defines the implementation for machine-readable commands like those to manage Wi-Fi.
 - [`usb.c`](https://github.com/tessel/firmware/blob/master/src/usb/usb.c) defines the implementation for arbitrary message passing.
 
-## CC3k WiFi Chip
+## CC3k Wi-Fi Chip
 
-We use TI's [CC3000](http://processors.wiki.ti.com/index.php/CC3000) as Tessel's wifi chip. 
+We use TI's [CC3000](http://processors.wiki.ti.com/index.php/CC3000) as Tessel's Wi-Fi chip.
 
 The CC3000 has TI's custom firmware loaded on to it. The version can be checked with a `tessel version --board`.
 
-Tessel talks to the CC3000 through a dedicated [SPI bus](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus). One SPI bus is used for all external ports (Ports A-D & GPIO), and the other SPI bus is use exclusively for Wifi. 
+Tessel talks to the CC3000 through a dedicated [SPI bus](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus). One SPI bus is used for all external ports (Ports A-D & GPIO), and the other SPI bus is use exclusively for Wi-Fi.
 
 We use TI's [utility functions](https://github.com/tessel/firmware/tree/master/src/cc3000/utility) for communication and have ported over the [host drivers](https://github.com/tessel/firmware/blob/master/src/cc3000/host_spi.c) to work with Tessel.
 
@@ -168,15 +168,15 @@ When Tessel first boots up, it does the following
 
 1. `tessel_wifi_init` is called in [`src/main.c`](https://github.com/tessel/firmware/blob/master/src/main.c).
 2. This enables the CC3000 by toggling a software enable pin and hooks a Tessel pin to listen for IRQs in [`src/tessel_wifi.c`](https://github.com/tessel/firmware/blob/master/src/tessel_wifi.c)
-3. The wifi connection LED starts blinking
+3. The Wi-Fi connection LED starts blinking
 4. During bootup the CC3000 checks the last profile it used, and because we use [Fast Connect](http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#Using_WLAN_policy_and_profiles) it will try to automatically reconnect.
-5. After the connection, the CC3000 will trigger the `CC3000_UsynchCallback` callback at [`src/cc3000/host_spi.c`](https://github.com/tessel/firmware/blob/master/src/cc3000/host_spi.c). 
+5. After the connection, the CC3000 will trigger the `CC3000_UsynchCallback` callback at [`src/cc3000/host_spi.c`](https://github.com/tessel/firmware/blob/master/src/cc3000/host_spi.c).
 6. `CC3000_UsynchCallback` will then trigger either `_cc3000_cb_wifi_connect` or `_cc3000_cb_wifi_disconnect` in [`src/tessel_wifi.c`](https://github.com/tessel/firmware/blob/master/src/tessel_wifi.c), which will in turn emit a command up to Tessel's CLI.
 
-Trying to connect to Wifi through a CLI `tessel wifi -n -p` does the following:
+Trying to connect to Wi-Fi through a CLI `tessel wifi -n -p` does the following:
 
-1. In CLI [`bin/tessel-wifi.js`](https://github.com/tessel/cli/blob/master/bin/tessel-wifi.js) the wifi command is parsed and calls the `configureWifi` command at [`src/commands.js`](https://github.com/tessel/cli/blob/master/src/commands.js).
-2. `configureWifi` sends a USB command packet along with the wifi credentials.
+1. In CLI [`bin/tessel-wifi.js`](https://github.com/tessel/cli/blob/master/bin/tessel-wifi.js) the `wifi` command is parsed and calls the `configureWifi` command at [`src/commands.js`](https://github.com/tessel/cli/blob/master/src/commands.js).
+2. `configureWifi` sends a USB command packet along with the Wi-Fi credentials.
 3. The command is processed at `tessel_cmd_process` in [`src/main.c`](https://github.com/tessel/firmware/blob/master/src/main.c)
 4. This then goes through the same steps as first bootup to connect.
 5. CLI reads the emitted events from `_cc3000_cb_wifi_connect` or `_cc3000_cb_wifi_disconnect` and exposes that back to the user.
@@ -184,9 +184,9 @@ Trying to connect to Wifi through a CLI `tessel wifi -n -p` does the following:
 
 ## Hardware Interrupts
 
-GPIO pins can wait for their state to change in order to fire an interrupt. The pin change can be fired on a signal `rise`, `fall`, `high` (like `rise` but can fire immediately), or `low` (like `fall` but can fire immediately). The LPC1830 microcontroller allows up to 8 simultaneous active interrupts, three of which are used by internal components (like the WiFI chip).
+GPIO pins can wait for their state to change in order to fire an interrupt. The pin change can be fired on a signal `rise`, `fall`, `high` (like `rise` but can fire immediately), or `low` (like `fall` but can fire immediately). The LPC1830 microcontroller allows up to 8 simultaneous active interrupts, three of which are used by internal components (like the Wi-Fi chip).
 
-The code handling interrupts can be found in [`/src/hw/hw_interrupt.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_interrupt.c). When an interrupt fires, [an event is queued](https://github.com/tessel/firmware/blob/master/src/hw/hw_interrupt.c#L258) in the event queue. At the next available moment, the interrupt is fired into Lua.  
+The code handling interrupts can be found in [`/src/hw/hw_interrupt.c`](https://github.com/tessel/firmware/blob/master/src/hw/hw_interrupt.c). When an interrupt fires, [an event is queued](https://github.com/tessel/firmware/blob/master/src/hw/hw_interrupt.c#L258) in the event queue. At the next available moment, the interrupt is fired into Lua.
 
 A tutorial for using hardware interrupts can be found [in our tutorials](https://github.com/tessel/docs/blob/master/tutorials/gpio-interrupts.md).
 
@@ -199,4 +199,4 @@ Integration points in the firmware can be found in [`/src/tm`](https://github.co
 
 ## Power Reduction Modes
 
-Tessel currently does very little in the way of reducing power when the event queue is empty. This is an area for much improvement. 
+Tessel currently does very little in the way of reducing power when the event queue is empty. This is an area for much improvement.
