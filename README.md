@@ -3,11 +3,11 @@ Contributing to Tessel
 
 ##At a glance:
 
-Are you trying to get to the root of a bug? Here are some common issues and their responsible repositories:
+Are you trying to get to the root of a bug? Here are some common issues and where to get started:
 
-- JavaScript and Node.js incompatibility: [Runtime](https://github.com/tessel/runtime)
-- Dropped WiFi transmissions: [Firmware](https://github.com/tessel/firmware)
-- Errors Pushing Code to Tessel: [Command Line Interface](https://github.com/tessel/cli)
+- JavaScript compatibility: [Runtime](./runtime-details.md#javascript-compatibility)
+- Node compatibility: [Runtime](./runtime-details.md#node.js-compatibility)
+- Dropped WiFi transmissions: [Firmware](./firmware-details#cc3k-wifi-chip)
 
 
 ##Contents:

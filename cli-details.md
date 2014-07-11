@@ -1,5 +1,7 @@
 # Command Line Interface Details
 
+Actual Details Coming Soon!
+
 The Command Line Interface is a Node.js module responsible for:
 
 - [Providing an interface for finding Tessels connected by USB](#tessel-client)
