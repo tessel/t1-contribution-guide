@@ -9,7 +9,7 @@ The firmware layer is responsible for:
 - [Transceiving data from peripherals over the SPI, UART, and I2C communication buses](#communication-buses).
 - [Reading and Writing Pin States](#reading-and-writing-pin-states)
 - [Communicating with the host computer over USB](#usb-communication)
-- [Managing and updating the Wi-Fi chip](#cc3k-wifi-chip)
+- [Managing and updating the Wi-Fi chip](#cc-3k-wifi-chip)
 - [Managing hardware interrupts](#hardware-interrupts)
 - [Communicating with the Lua VM](#integrating-with-runtime)
 - [Putting the processor to sleep when it's not being used](#power-reduction-modes)

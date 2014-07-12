@@ -7,7 +7,7 @@ Are you trying to get to the root of a bug? Here are some common issues and wher
 
 - JavaScript compatibility: [Runtime](./runtime-details.md#javascript-compatibility)
 - Node compatibility: [Runtime](./runtime-details.md#nodejs-compatibility)
-- Dropped WiFi transmissions: [Firmware](./firmware-details.md#cc3k-wifi-chip)
+- Dropped WiFi transmissions: [Firmware](./firmware-details.md#cc3k-wi-fi-chip)
 
 
 ##Contents:
