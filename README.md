@@ -6,7 +6,7 @@ Contributing to Tessel
 Are you trying to get to the root of a bug? Here are some common issues and where to get started:
 
 - JavaScript compatibility: [Runtime](./runtime-details.md#javascript-compatibility)
-- Node compatibility: [Runtime](./runtime-details.md#node.js-compatibility)
+- Node compatibility: [Runtime](./runtime-details.md#nodejs-compatibility)
 - Dropped WiFi transmissions: [Firmware](./firmware-details#cc3k-wifi-chip)
 
 
