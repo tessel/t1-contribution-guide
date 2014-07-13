@@ -1,6 +1,6 @@
 # Firmware Details
 
-You can find the firmware repo [here](github.com/firmware) and the source building instructions [here](./build-from-source.md#firmware).
+You can find the firmware repo [here](https://github.com/tessel/firmware) and the source building instructions [here](./build-from-source.md#firmware).
 
 When Tessel boots, firmware gets loaded into flash by way of the [bootloader](#bootloader).
 
@@ -18,13 +18,13 @@ The firmware layer is responsible for:
 
 When Tessel is first programmed at the factory, the OTP binary sets the OTP bits to (0x0Y) where Y is the hardware version of Tessel (Y was 4 for the final production run). The OTP binary then loads the bootloader into flash and sets the OTP bits such that the microcontroller knows to always bootup from flash.
 
-The OTP script can be found in [`/otp/main.c`](https://github.com/tessel/firmware/tree/master/otp) and the bootloader can be found in [`/boot/main.c`](https://github.com/tessel/firmware/blob/master/boot/main.c).
+The OTP script can be found in [`/otp/main.c`](https://github.com/tessel/firmware/tree/master/otp/main.c) and the bootloader can be found in [`/boot/main.c`](https://github.com/tessel/firmware/blob/master/boot/main.c).
 
 ## Tessel API
 
 The Tessel API is the built-in JavaScript file that defines the high-level interfaces to the Tessel board. It includes functions for sending data over the [communication buses](#communication-buses), writing and reading [GPIO pins](http://en.wikipedia.org/wiki/General-purpose_input/output), waiting for hardware interrupts, and much more.
 
-The API documentation can be found [on our docs](https://github.com/tessel/docs) and the implementation can be found at [`built-in/tessel.js`](https://github.com/tessel/firmware/blob/master/builtin/tessel.js). You'll notice that it binds to two processes exposed by the runtime at the top of the file:
+The API documentation can be found [on our docs](https://github.com/tessel/docs) and the implementation can be found at [`builtin/tessel.js`](https://github.com/tessel/firmware/blob/master/builtin/tessel.js). You'll notice that it binds to two processes exposed by the runtime at the top of the file:
 
 ```.js
 var tm = process.binding('tm');
@@ -38,7 +38,7 @@ We then have a functionality that binds those Lua functions to the underlying C 
 For example, when a function like `tessel.port['A'].digital[0].write(0)` is
 called, the following happens:
 
-1. The Tessel object's properties are read from [builtin.js](https://github.com/tessel/firmware/blob/master/builtin/tessel.js):
+1. The Tessel object's properties are read from [`builtin.js`](https://github.com/tessel/firmware/blob/master/builtin/tessel.js):
 
   ```.js
   this.ports =  {
@@ -64,7 +64,7 @@ called, the following happens:
     }
   ```
 
-3. In the case of this example (digital.write), we are calling the [`l_hw_digital_write` function](https://github.com/tessel/firmware/blob/master/src/hw/l_hw.c#L384):
+3. In the case of this example (digital.write), we are calling the [`l_hw_digital_write`](https://github.com/tessel/firmware/blob/master/src/hw/l_hw.c#L384) function:
 
   ```.c
   static int l_hw_digital_write(lua_State* L)
