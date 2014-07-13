@@ -1,6 +1,6 @@
 # Firmware Details
 
-You can find the firmware repo [here](github.com/firmware) and the source building instructions [here](./build-from-source.md#firmware).
+You can find the firmware repo [here](https://github.com/tessel/firmware) and the source building instructions [here](./build-from-source.md#firmware).
 
 When Tessel boots, firmware gets loaded into flash by way of the [bootloader](#bootloader).
 
