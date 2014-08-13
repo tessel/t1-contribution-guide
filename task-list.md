@@ -34,6 +34,6 @@ Below we've listed some of the most important issues that we'd appreciate help w
 
 - [Tessel Freezes with I2C Buffer of Length 0](https://github.com/tessel/firmware/issues/29). Trouble for obvious reasons. A very easy fix involves checking the length of the transmit buffer and returning if it's zero. 
 
-- [Set a Static IP Address on Tessel](https://github.com/tessel/firmware/issues/35) using TI's CC3k API. This will require more patience and/or experience with embedded firmware. 
+- [Set a Static IP Address on Tessel](https://github.com/tessel/firmware/issues/35) using [TI's CC3k API](http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#MAC_Address_update_process.). This will require more patience and/or experience with embedded firmware. 
 
 - [Adding Pin Name As Pin Property](https://github.com/tessel/firmware/issues/30). Currently, calling `Port.pwm`, `Port.digital`, or `Port.analog` will return an array of pins. Unfortunately, those pins don't have a name property (like 'G1' or 'A3') so it's difficult to distinguish which you want to use.
