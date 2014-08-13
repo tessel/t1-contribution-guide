@@ -1,7 +1,5 @@
 # The Task List
 
-Get started contributing to the Open Source Software movement with Tessel!
-
 This list contains improvements that would substantially increase the value and usability of the Tessel ecosystem. We'd love help getting these additions complete and are happy to help advise if you're interested in picking one up! See the [contribution process](./contribution-process.md) for more details on how to contribute.
 
 You can chat with us at #tessel on IRC. 
