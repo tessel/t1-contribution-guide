@@ -23,7 +23,7 @@ firmware >> git checkout -b add-teleporation-api
 ```
 
 ## Step 3.5: Write up an RFC
-Does your addition introduce a new API?Write up an API for the fix (along with any implementation details you find necessary) and post it to the forums with the RFC flag. See https://forums.tessel.io/t/wifi-api-from-js-for-the-cc3000/399 as a reference
+Does your addition introduce a new API? Write up an API for the fix (along with any implementation details you find necessary) and post it to the forums with the RFC flag. See https://forums.tessel.io/t/wifi-api-from-js-for-the-cc3000/399 as a reference
 
 ## Step 4: Fix it up
 
