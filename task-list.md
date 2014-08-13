@@ -22,7 +22,7 @@ Below we've listed some of the most important issues that we'd appreciate help w
 
 - [JavaScript Typed Array Support](https://github.com/tessel/runtime/issues/254). These sized arrays would be really helpful for lower-level hardware.
 
-- [Support for JavaScript Stacktrace APIs](https://github.com/tessel/runtime/issues/256). Although not explicity a part of Node.js, many node modules call these V8 functions. Stack Trace APIs will also improve the debugging experience on Tessel. 
+- [Support for JavaScript Stacktrace APIs](https://github.com/tessel/runtime/issues/256). Although not explicitly a part of Node.js, many node modules call these V8 functions. Stack Trace APIs will also improve the debugging experience on Tessel. 
 
 - [Improving JavaScript Date compatibility](https://github.com/tessel/runtime/labels/Date-Incompatibility). There are a handful of reported issues where our Date implementation is not compatible with ES5.1 or they simply don't work. Our Date implementation code can be found in [`colony-js.lua`](https://github.com/tessel/runtime/blob/master/src/colony/lua/colony-js.lua#L1366).
 
