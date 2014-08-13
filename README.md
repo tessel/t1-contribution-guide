@@ -1,6 +1,10 @@
 Contributing to Tessel
 ==================
 
+##Contact Us
+
+We're at #tessel on IRC if you need to get a quick answer.
+
 ##At a glance:
 
 Are you trying to get to the root of a bug? Here are some common issues and where to get started:
