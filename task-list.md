@@ -8,7 +8,7 @@ You can chat with us at #tessel on IRC.
 
 ## Finding an Approachable Task
 
-For each of Tessel's repositories, we've added the 'help wanted' flag for issues that we feel require less application-specific knowledge to fix and are a great way to start contributing. Check out the [firmware](https://github.com/tessel/firmware/labels/help%20wanted), [runtime](https://github.com/tessel/runtime/labels/help%20wanted), and [CLI](https://github.com/tessel/cli/labels/help%20wanted) contribution tasks or, for each hardware module, check out the issue tags for under each module's repository. The CLI has the least hardware-specific tasks for developers who aren't ready to get their toes wet with the bare metal.
+For each of Tessel's repositories, we've added the 'help wanted' flag for issues that we feel require less hardware-specific knowledge to fix and are a great way to start contributing. Check out the [firmware](https://github.com/tessel/firmware/labels/help%20wanted), [runtime](https://github.com/tessel/runtime/labels/help%20wanted), and [CLI](https://github.com/tessel/cli/labels/help%20wanted) contribution tasks or, for each hardware module, check out the issue tags for under each module's repository. The CLI has the least hardware-specific tasks for developers who aren't quite ready to get their toes wet with the bare metal.
 
 Below we've listed some of the most important issues that we'd appreciate help with:
 
