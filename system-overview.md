@@ -2,10 +2,10 @@
 
 This is an overview of how all the components of Tessel work. It is intended to be a reference for those wishing to contribute to the internals of Tessel.
 
-Tessel comprises of the following:
+Tessel comprises the following:
  
 * **Firmware** - C code that is the interface to all the hardware components (Wifi, RAM, Flash, SPI/UART/I2C busses). It also runs the event queue and handles interrupts.
-* **Runtime** - the Lua VM running Lua code. It also includes the compatability layer for core JS functions (String, Number, etc), as well as the core Node functions (fs, buffers, etc)
+* **Runtime** - the Lua VM running Lua code. It also includes the compatibility layer for core JS functions (String, Number, etc), as well as the core Node functions (fs, buffers, etc)
 * **Colony** - JS -> Lua compiler
 * **CLI** - the command line interface for communicating to a Tessel over a USB bus.
 
