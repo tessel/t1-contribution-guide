@@ -10,22 +10,12 @@ For each of Tessel's repositories, we've added the 'help wanted' flag for issues
 
 Below we've listed some of the most important issues that we'd appreciate help with:
 
-### Command Line Interface (CLI)
-
-- [Support a "Non-compile" Directory](https://github.com/tessel/cli/issues/116). For applications in which Tessel acts as a server and sends static JavaScript to clients, it would be useful to not automatically compile all JavaScript to Lua before sending it to Tessel.
-
-- [Stop Deployment on Large Applications](https://github.com/tessel/cli/issues/94). One of the most common cases of Tessel freezing up is when users accidentally send an application that is larger than Tessel's memory (32MB of Flash and 32MB of RAM) can support. We need to detect if the size is greater than ~30 MB and stop deployment if that's the case.
-
 ### Runtime
 
 - [JavaScript Typed Array Support](https://github.com/tessel/runtime/issues/254). These sized arrays would be really helpful for lower-level hardware.
 
-- [Support for JavaScript Stacktrace APIs](https://github.com/tessel/runtime/issues/256). Although not explicitly a part of Node.js, many node modules call these V8 functions. Stack Trace APIs will also improve the debugging experience on Tessel. 
-
 - [Improving JavaScript Date compatibility](https://github.com/tessel/runtime/labels/Date-Incompatibility). There are a handful of reported issues where our Date implementation is not compatible with ES5.1 or they simply don't work. Our Date implementation code can be found in [`colony-js.lua`](https://github.com/tessel/runtime/blob/master/src/colony/lua/colony-js.lua#L1366).
-
-- [Throw Error for Non-Function Arguments to EventEmitter](https://github.com/tessel/runtime/issues/223). This is an easy task to check the argument to `eventEmitter.addListener` to make sure a function was provided. Throw an error otherwise. 
-
+]
 
 ### Firmware
 
