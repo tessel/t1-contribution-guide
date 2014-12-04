@@ -39,11 +39,13 @@ When you're ready to submit the contribution, [rebase your branch](http://git-sc
 
 ## Step 6: Submit a PR
 
-Open a Pull Request on your branch which includes your fix as well as the passing test file. We'll either give you feedback on a few needed tweaks or accept your PR as is and merge it into master. 
+Open a Pull Request on your branch which includes your fix as well as the passing test file. We'll either give you feedback on a few needed tweaks or accept your PR as is and run it through Rampart, our testing infrastructure.
+
+If you are a member of the [contributors](https://github.com/orgs/tessel/teams/contributors) team, you should not run Rampart on your own PR - the person that reviews and approves your code should do it.
 
 ## Step 6: Run Rampart
 
-Rampart is the testing framework used within Technical Machine to test every new piece of code on actual hardware. We have four Tessels with every module plugged in connected up to computer in the Technical Machine office. Before any code is merged into master, it is sent to run through the test suite of firmware and runtime as well as every module's test suite.
+Rampart is the testing framework used within Technical Machine to test every new piece of code on actual hardware. We have four Tessels with every module plugged in connected up to computer in the Technical Machine office. Before any code is merged into master, it is run through the test suite of firmware and runtime as well as every module's test suite.
 
 Only members within the [contributors](https://github.com/orgs/tessel/teams/contributors) team have access to approve a PR to run on Rampart. If you are not on the team yet, please ask a relevant team member to run the test. Once a contributor has merged in several significant PRs and someone on the contributor's team feels they have a reasonable amount of knowledge about the system architecture and the project workflow, they may be added to the contributor's team. 
 
