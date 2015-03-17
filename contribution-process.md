@@ -19,7 +19,7 @@ Comment on that issue to say that you're working on solving the problem so that 
 Create a branch of the repo that you're working on:
 
 ```
-firmware >> git checkout -b add-teleporation-api
+firmware >> git checkout -b add-teleportation-api
 ```
 
 ## Step 3.5: Write up a Request For Comments (RFC)
