@@ -3,7 +3,7 @@ Contributing to Tessel
 
 ##Contact Us
 
-We're at #tessel on IRC if you need to get a quick answer. Otherwise, post [on the forums](forums.tessel.io) or make a Github issue.
+We're at #tessel on IRC if you need to get a quick answer. Otherwise, post [on the forums](https://forums.tessel.io) or make a Github issue.
 
 ##At a glance:
 
